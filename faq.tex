@@ -184,173 +184,133 @@ Assistant : Christophe Bovigny
 %\question{Why is there a label in the code for \hyperref[new-question]{the previous question}?}\label{labels}
 
 
-\question{HDFS (Hadoop Distributed File System)}\label{new-question}
+\question{Map Reduce}\label{new-question}
 
 \begin{center}
-{\bf \emph{Manipuler des répertoires dans HDFS}} % Main title
+{\bf \emph{Problème}} % Main title
 \end{center}
 
-Tout d'abord nous allons créer un répertoire TD1 dans le système de fichier HDFS.
-\lstinputlisting[language=sh,mathescape]{Scripts/createdirectoryhdfs.sh}
-Créez un sous-répertoire EX1 dans TD1.
+Le but de cette partie est de comprendre la résolution d'un problème simple au moyen de l'algorithme map/reduce. Ici nous avons un fichier contenant des livres et nous voudrions
+connaître combien de livres sont publiés par année.
+
+Une classe java BookXMapper est définie comme ceci :
+
+\lstinputlisting[language=java]{Scripts/BookXMapper.java}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+Solution :
 %%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\lstinputlisting[language=sh,mathescape]{Scripts/createex1hdfs.sh}
+
+Chaque ligne du fichier est découpée à chaque délimiteur ``;'' afin d'avoir un tableau de type ``String``. Le quatrième élément du tableau est le champ "Year-of-Publication'', lequel est la clé
+du mapper.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Listez tous les fichiers et répertoire de votre home.
-\lstinputlisting[language=sh,mathescape]{Scripts/listhdfs.sh}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
-Vous devriez y voir votre dossier TD1 fraîchement créé.
 
-\lstinputlisting[language=sh,mathescape]{Scripts/viewhdfsls.sh}
+Ensuite une method reduce est crée: expliquez-la:
 
-Maintenant listez récursivement vos dossier afin de voir le dossier EX1 qui se trouve dans TD1.(Astuce : Utilisez l'option -R)
 
-\lstinputlisting[language=sh,mathescape]{Scripts/viewhdfslsR.sh}
-
+\lstinputlisting[language=java]{Scripts/BookXReducer.java}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
 %%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 2%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Solution :
-\lstinputlisting[language=sh,mathescape]{Scripts/viewhdfslsRsolution.sh}
+
+La méthode reduce prend en paramètres : key et Iterator$<$IntWritable$>$ values (valeurs groupées pour chaque key). Pour notre programme, nous utilisons à nouveau la clé de mapper comme l'output
+du reducer et ajoutons chaque valeur de la liste. (Output de mapper est un new IntWritable(1)). Nous ajoutons toutes les occurences de new IntWritable(1) afin d'avoir le compte de livres
+publiés pour chaque clé (année de publication)
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
 
-Effacez les deux dossiers TD1 et EX1 créés précédement en une seule commande :
 
-\lstinputlisting[language=sh,mathescape]{Scripts/eraseall.sh}
-
-Et à nouveau créer un dossier et sous-dossier TD1/EX1 mais cette fois-ci en une seule commande
-
-\lstinputlisting[language=sh,mathescape]{Scripts/mkdirp.sh}
+Finalement une dernière classe BookXDriver est ajoutée et servira comme main program afin de lancer le job MapReduce.
+\lstinputlisting[language=java]{Scripts/BookXDriver.java}
 
 
-{\bf \emph{Créer un dossier et un sous-dossier TD1\_LOCAL et EX1\_LOCAL, mais cette fois-ci en utilisant que les commandes linux standard et en n'employant pas le système de fichier HDFS }} % Main title
-
-\paragraph{}
-\begin{center}
+Maintenant nous allons lancer ce programme sur le cluster DAPLAB :
 
 
-{\bf \emph{Manipuler des fichiers dans HDFS}} % Main title
-\end{center}
-Allez dans le répertoire EX1\_LOCAL et téléchargez le fichier data.txt à l'addresse suivante :
+\lstinputlisting[language=sh,mathescape]{Scripts/launchmapreducesecond.sh}
+
+Regardez l'output de votre map/reduce et expliquez-le
 
 
-\lstinputlisting[language=sh,mathescape]{Scripts/download.sh}
+\question{HIVE}\label{new-question}
 
-\lstinputlisting[language=sh,mathescape]{Scripts/viewdownload.sh}
+Maintenant nous allons résoudre le même problème que précédement, mais cette fois en utilisant la technologie HIVE.
 
-Nous allons transférer le fichier data.txt de notre dossier local : \\
-\textit{/votrehome/TD1\_LOCAL/EX1\_LOCAL/data.txt}
+Notre fichier BX-Books.csv n'est pas clean pour l'utiliser dans hive, c'est pourquoi la commande sed s'impose :
 
-dans le répertoire EX1 du système de fichier HDFS 
 
-\textit{TD1/EX1/} 
+\lstinputlisting[language=sh,mathescape]{Scripts/sed.sh}
 
-(Astuce : Pour ceci utilisez la commande copyFromLocal) \\
-\bigskip
-\bigskip
-\bigskip
+Cette commande élimine les délimiteurs "`;`(semicolon) et les remplace par des ``\$\$\$'', et le motif "\&amp;" est remplacé par "AND". Cette commande élimine aussi le header du fichier.
+(si on ne l'élimine pas Hive le considère comme data). Ce fichier corrigé se trouve dans /shared/tp2/BX-BooksCorrected.txt du système de fichier HDFS.
 
-Solution :
+
+
+Maintenant nous allons lancer hive et créer une table BXDataSet.
+
+A l'intérieur veuillez mettre ISBN (STRING), BookTitle (STRING), BookAuthor (STRING), YearOfPublication (STRING), Publisher (STRING), ImageURLS (STRING), ImageURLM (STRING) et ImageURLL (STRING) comme champ
+
+\lstinputlisting[language=sh,mathescape]{Scripts/hivenotcorrected.sh}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
 %%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 3%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\lstinputlisting[language=sh,mathescape]{Scripts/copyfromlocal.sh}
+\lstinputlisting[language=sh,mathescape]{Scripts/hive.sh}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Afin de voir le contenu du fichier data.txt se trouvant dans le système de fichier HDFS, vous pouvez utiliser la commande cat :
-
-\lstinputlisting[language=sh,mathescape]{Scripts/cat.sh}
-
-Nous allons effacer le fichier local data.txt et ensuite copier le fichier data.txt de HDFS en Local
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
 
-\lstinputlisting[language=sh,mathescape]{Scripts/copytolocal.sh}
 
-Exercice :
-Downloader en Local deux fichiers via les commandes ci-dessous dans le repertoire /votrehome/TD1\_LOCAL/EX1\_LOCAL/FILES\_LOCAL/:
+Maintenant nous avons deux solutions pour créer la table, la première intéractivement et la seconde en une ligne de commande en mettant les instructions dans un fichier createtablehive.sql 
+\lstinputlisting[language=sh,mathescape]{Scripts/hivelaunch.sh}
 
-\lstinputlisting[language=sh,mathescape]{Scripts/download2.sh}
+Ensuite il faut remplir la table bxdataset en utilisant le fichier BX-BooksCorrected\_CHRISTOPHE.txt se situant dans /shared/tp2/. Tout d'abord copiez ce fichier dans votre home hdfs et ensuite lancez
+la commande ci-dessous.
+\lstinputlisting[language=sh,mathescape]{Scripts/hiveloaddata.sh}
 
-Créez un répertoire TD1/EX1/FILES sous HDFS et copiez les fichiers part-m-00000 et part-m-00001 à l'intérieur de ces derniers.
-\bigskip
-\bigskip
-\bigskip
 
-Solution :
+Afin d'obtenir le même résultat que pour le MapReduce, veuillez complèter la requête dans hive.
+
+\lstinputlisting[language=sh,mathescape]{Scripts/hivesql.sh}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
 %%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 4%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\lstinputlisting[language=sh,mathescape]{Scripts/copyfromlocal2files.sh}
+\lstinputlisting[language=sh,mathescape]{Scripts/hivesqlsol.sh}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
-Après cet exercice il serait intéressant de concaténer ces deux fichiers en un et de les analyser en local. hdfs dfs -getmerge permet de tout faire en une seule commande. 
-Une petite variante existe, si vous désirez insérer une ligne vide dans le fichier final entre chaque fichiers concaténés, ajouter l'option -nl 
-
-\lstinputlisting[language=sh,mathescape]{Scripts/getmerge.sh}
+Voilà votre requête dans hive donne exactement la même solution que votre MapReduce en java. 25 lignes se sont transformées en 3 lignes :)
 
 
-\begin{figure}[h!]
-
-  \centering
-    \includegraphics[width=0.5\textwidth]{Images/drawing.jpg}
-      \caption{copyFromLocal/copyToLocal/getmerge}
-\end{figure}
+\question{PIG}\label{new-question}
 
 
-\begin{center}
-{\bf \emph{Grandeur de Block dans HDFS}} % Main title
-\end{center}
+Maintenant nous allons effectuer la même chose mais en utilisant pig.
 
-Effacez le fichier part-m-00000 dans hdfs avec la commande appropriée et ensuite essayez de le remettre avec un blocksize de 30 bytes. (Astuce : placez l'option -D dfs.blocksize=bytesize juste après hdfs dfs)
-
-Réponse:(Message affiché en sortie de la commande et expliquez) :
-
-\bigskip
-\bigskip
-\bigskip
+Nous allons lancer pig sur daplab, loader les données dans une variable BookXRecords, ensuite les grouper par année de publication et finalement concaténer le nombre de publications par année.
+\lstinputlisting[language=sh,mathescape]{Scripts/pignotcorrected.sh}
 
 
-Solution:
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 5%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lstinputlisting[language=sh,mathescape]{Scripts/pig.sh}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\lstinputlisting[language=sh,mathescape]{Scripts/blocksize30.sh}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
-
-\question{Map/Reduce}\label{new-question}
-
-Dans cette partie, nous allons essayer de comprendre comment fonctionne le map/reduce de Hadoop. Ce dernier a pour but de compter la fréquence de chaque mots dans un ou plusieurs
-fichiers textes.
-
-Le programme a plusieurs sections, la première partie est composée de la classe MapClass. Que fait-elle et que retourne-t-elle ?
+Allez controler le résultat dans votre output hdfs et passez-le en local.
 
 
 
-\lstinputlisting[language=java]{Scripts/Map.java}
 
 
 
-La deuxième partie est naturellement la classe Reduce. Comme précédement veuillez commenter et expliquer que fait cette classe ?
-
-
-\lstinputlisting[language=java]{Scripts/Reduce.java}
-
-
-Voici le code source final:
-
-\lstinputlisting[language=java]{Scripts/WordCount.java}
-
-
-
-Maintenant nous allons exécuter ce programme sous le cluster Hadoop du DAPLAB. Connectez-vous au cluster et ensuite créer un répertoire TD1\_MAPREDUCE dans votre home.
-Ensuite copiez les deux fichiers 4300.txt et hadoop-0.20.1-examples.jar dans ce répertoire précédement créer. 
-\paragraph{}
-
-Le pas d'après sera de placer le fichier 4300.txt dans un répertoire HDFS qui se nommera également TD1\_MAPREDUCE. (CF:exercice 1)
-\paragraph{}
-Ensuite lancez la commande :
-
-
-\lstinputlisting[language=sh,mathescape]{Scripts/launchmapreduce.sh}
-
-
-Veuillez transférer le resultat obtenu de HDFS en local et commentez l'output obtenu.
-
+\question{Spark}\label{new-question}
 
 
 
