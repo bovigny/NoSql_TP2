@@ -95,7 +95,7 @@
 %----------------------------------------------------------------------------------------
 
 \begin{center}
-\Huge{\bf \emph{NoSQL 2015 \\ TD 1}} % Main title
+\Huge{\bf \emph{NoSQL 2015 \\ TD 2}} % Main title
 \end{center}
 
 \begin{center}
@@ -312,8 +312,31 @@ Allez controler le résultat dans votre output hdfs et passez-le en local.
 
 \question{Spark}\label{new-question}
 
+Maintenant nous allons effectuer une requête sur la base de donné de hive avec spark. 
 
 
+\lstinputlisting[language=java]{Scripts/spark.sh}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 5%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lstinputlisting[language=java]{Scripts/sparksol.sh}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+
+
+Maintenant il s'agit de lancer ce code sur le cluster DAPLAB. : Downloader le projet github sur votre compte local de Daplab.
+
+
+\lstinputlisting[language=sh,mathescape]{Scripts/git.sh}
+
+Et finalement lancez le programme au moyen de spark-submit en passant par yarn.
+
+\lstinputlisting[language=sh,mathescape]{Scripts/yarn.sh}
+
+
+%sbt-package
+%spark-submit --class "hivespark" --master yarn-client --num-executors 4 --executor-cores 4 --executor-memory 8g hivespark_2.11-1.0.jar
 
 
 % \question{Prérequis}\label{new-question}
