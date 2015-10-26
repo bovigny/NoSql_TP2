@@ -190,8 +190,20 @@ Assistant : Christophe Bovigny
 {\bf \emph{Problème}} % Main title
 \end{center}
 
+
+
 Le but de cette partie est de comprendre la résolution d'un problème simple au moyen de l'algorithme map/reduce. Ici nous avons un fichier contenant des livres et nous voudrions
 connaître combien de livres sont publiés par année.
+
+Avant de se lancer dans le code, il est important de s'intéresser au fichier que l'on va utiliser : Copiez-le en locale dans votre home folder et ensuite analysez-le. (HDFS :/shared/tp2/BX-Books.csv). 
+\paragraph{}
+
+Quelles problèmes pourraient-être
+rencontrer lors de l'insertion de ces données dans une table ?
+
+\paragraph{}
+
+
 
 Une classe java BookXMapper est définie comme ceci :
 
@@ -209,7 +221,7 @@ du mapper.
 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
 
-Ensuite une method reduce est crée: expliquez-la:
+Ensuite une méthode reduce est crée: expliquez-la:
 
 
 \lstinputlisting[language=java]{Scripts/BookXReducer.java}
@@ -245,7 +257,7 @@ Maintenant nous allons résoudre le même problème que précédement, mais cett
 Notre fichier BX-Books.csv n'est pas clean pour l'utiliser dans hive, c'est pourquoi la commande sed s'impose :
 
 
-\lstinputlisting[language=sh,mathescape]{Scripts/sed.sh}
+\lstinputlisting[language=sh]{Scripts/sed.sh}
 
 Cette commande élimine les délimiteurs "`;`(semicolon) et les remplace par des ``\$\$\$'', et le motif "\&amp;" est remplacé par "AND". Cette commande élimine aussi le header du fichier.
 (si on ne l'élimine pas Hive le considère comme data). Ce fichier corrigé se trouve dans /shared/tp2/BX-BooksCorrected.txt du système de fichier HDFS.
