@@ -1,0 +1,436 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Frequently Asked Questions
+% LaTeX Template
+% Version 1.0 (22/7/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Adam Glesser (adamglesser@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry} % Required to make the margins smaller to fit more content on each page
+\usepackage[linkcolor=blue]{hyperref} % Required to create hyperlinks to questions from elsewhere in the document
+\hypersetup{pdfborder={0 0 0}, colorlinks=true, urlcolor=blue} % Specify a color for hyperlinks
+\usepackage{todonotes} % Required for the boxes that questions appear in
+\usepackage{tocloft} % Required to give customize the table of contents to display questions
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{palatino} % Use the Palatino font
+
+
+
+\usepackage[utf8]{inputenc} 
+\usepackage[french]{babel} 
+
+
+
+\usepackage{listings} % Required for inserting code snippets
+
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstset{escapechar=@,style=customc}
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+% Create and define the list of questions
+\newlistof{questions}{faq}{\large List of Frequently Asked Questions} % This creates a new table of contents-like environment that will output a file with extension .faq
+\setlength\cftbeforefaqtitleskip{4em} % Adjusts the vertical space between the title and subtitle
+\setlength\cftafterfaqtitleskip{1em} % Adjusts the vertical space between the subtitle and the first question
+\setlength\cftparskip{.3em} % Adjusts the vertical space between questions in the list of questions
+
+% Create the command used for questions
+\newcommand{\question}[1] % This is what you will use to create a new question
+{
+\refstepcounter{questions} % Increases the questions counter, this can be referenced anywhere with \thequestions
+\par\noindent % Creates a new unindented paragraph
+\phantomsection % Needed for hyperref compatibility with the \addcontensline command
+\addcontentsline{faq}{questions}{#1} % Adds the question to the list of questions
+\todo[inline, color=blue!40]{\textbf{#1}} % Uses the todonotes package to create a fancy box to put the question
+\vspace{1em} % White space after the question before the start of the answer
+}
+
+% Uncomment the line below to get rid of the trailing dots in the table of contents
+%\renewcommand{\cftdot}{}
+
+% Uncomment the two lines below to get rid of the numbers in the table of contents
+%\let\Contentsline\contentsline
+%\renewcommand\contentsline[3]{\Contentsline{#1}{#2}{}}
+
+
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE AND LIST OF QUESTIONS
+%----------------------------------------------------------------------------------------
+
+\begin{center}
+\Huge{\bf \emph{NoSQL 2015 \\ TD 2}} % Main title
+\end{center}
+
+\begin{center}
+Professeurs 
+
+\bigskip 
+
+
+Houda Chabbi Drissi \\et \\Benoît Perroud \\
+\end{center}
+
+\begin{center}
+\begin{figure}[h!]
+
+  \centering
+    \includegraphics[width=0.4\textwidth]{Images/Logo_HEIA-FR_site}
+     
+\end{figure}
+\end{center}
+
+
+
+\begin{figure}[h!]
+
+  \centering
+    \includegraphics[width=1\textwidth]{Images/Hadoop-tutorial.png}
+     
+\end{figure}
+
+\bigskip
+
+\begin{center}
+ 
+
+
+\begin{figure}[h!]
+
+  \centering
+    \includegraphics[width=0.5\textwidth]{Images/DAPLab-Title.png}
+     
+\end{figure}
+\end{center}
+
+
+\begin{center} 
+Assistant : Christophe Bovigny
+\end{center}
+
+\listofquestions % This prints the subtitle and a list of all of your questions
+
+\newpage % Comment this if you would like your questions and answers to start immediately after table of questions
+
+%----------------------------------------------------------------------------------------
+%	QUESTIONS AND ANSWERS
+%----------------------------------------------------------------------------------------
+
+% \question{Prérequis}\label{new-question}
+% 
+% 
+% Tous les étudiants doivent envoyer une clé publique ssh à l'addresse email : bovignyc@gmail.com afin de pouvoir se connecter et s'exercer sur le cluster DAPLAB
+% \\
+% Génération de la clé publique:
+% \\
+% \lstinputlisting[language=sh]{Scripts/sshkey.sh}
+% 
+% Clé à envoyer :
+% \\
+% \lstinputlisting[language=sh]{Scripts/seekey.sh}
+% 
+% Connection au Cluster :
+% 
+% Votre login est la première lettre de votre prenom suivi par votre nom : (Exemple : Christophe Bovigny = cbovigny). Durant ce travail dirigé tous les exemples seront produits 
+% avec l'utilisateur cbovigny. 
+% %\lstinputlisting[language=Python]{Scripts/login.sh}
+% 
+% \lstinputlisting[language=sh,mathescape]{Scripts/login.sh}
+%  % The first argument is the script location/filename and the second is a caption for the listing
+% %\begin{verbatim}
+% %\question{A question that needs answering}\label{question-label}
+% 
+% %The answer to this question.
+% %\end{verbatim}
+
+%------------------------------------------------
+
+%\question{Why is there a label in the code for \hyperref[new-question]{the previous question}?}\label{labels}
+
+
+\question{Map Reduce}\label{new-question}
+
+\begin{center}
+{\bf \emph{Problème}} % Main title
+\end{center}
+
+
+
+Le but de cette partie est de comprendre la résolution d'un problème simple au moyen de l'algorithme map/reduce. Ici nous avons un fichier contenant des livres et nous voudrions
+connaître combien de livres sont publiés par année.
+
+Avant de se lancer dans le code, il est important de s'intéresser au fichier que l'on va utiliser : Copiez-le en locale dans votre home folder et ensuite analysez-le. (HDFS :/shared/tp2/BX-Books.csv). 
+\paragraph{}
+
+Quelles problèmes pourraient-être
+rencontrer lors de l'insertion de ces données dans une table ?
+
+\paragraph{}
+
+
+
+Une classe java BookXMapper est définie comme ceci :
+
+\lstinputlisting[language=java]{Scripts/BookXMapper.java}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Chaque ligne du fichier est découpée à chaque délimiteur ``;'' afin d'avoir un tableau de type ``String``. Le quatrième élément du tableau est le champ "Year-of-Publication'', lequel est la clé
+du mapper.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+
+Ensuite une méthode reduce est crée: expliquez-la:
+
+
+\lstinputlisting[language=java]{Scripts/BookXReducer.java}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 2%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+La méthode reduce prend en paramètres : key et Iterator$<$IntWritable$>$ values (valeurs groupées pour chaque key). Pour notre programme, nous utilisons à nouveau la clé de mapper comme l'output
+du reducer et ajoutons chaque valeur de la liste. (Output de mapper est un new IntWritable(1)). Nous ajoutons toutes les occurences de new IntWritable(1) afin d'avoir le compte de livres
+publiés pour chaque clé (année de publication)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+
+
+Finalement une dernière classe BookXDriver est ajoutée et servira comme main program afin de lancer le job MapReduce.
+\lstinputlisting[language=java]{Scripts/BookXDriver.java}
+
+
+Maintenant nous allons lancer ce programme sur le cluster DAPLAB :
+
+
+\lstinputlisting[language=sh,mathescape]{Scripts/launchmapreducesecond.sh}
+
+Regardez l'output de votre map/reduce et expliquez-le
+
+
+\question{HIVE}\label{new-question}
+
+Maintenant nous allons résoudre le même problème que précédement, mais cette fois en utilisant la technologie HIVE.
+
+Notre fichier BX-Books.csv n'est pas clean pour l'utiliser dans hive, c'est pourquoi la commande sed s'impose :
+
+
+\lstinputlisting[language=sh]{Scripts/sed.sh}
+
+Cette commande élimine les délimiteurs "`;`(semicolon) et les remplace par des ``\$\$\$'', et le motif "\&amp;" est remplacé par "AND". Cette commande élimine aussi le header du fichier.
+(si on ne l'élimine pas Hive le considère comme data). Ce fichier corrigé se trouve dans /shared/tp2/BX-BooksCorrected.txt du système de fichier HDFS.
+
+
+
+Maintenant nous allons lancer hive et créer une table BXDataSet.
+
+A l'intérieur veuillez mettre ISBN (STRING), BookTitle (STRING), BookAuthor (STRING), YearOfPublication (STRING), Publisher (STRING), ImageURLS (STRING), ImageURLM (STRING) et ImageURLL (STRING) comme champ
+
+\lstinputlisting[language=sh,mathescape]{Scripts/hivenotcorrected.sh}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 3%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lstinputlisting[language=sh,mathescape]{Scripts/hive.sh}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+
+
+Maintenant nous avons deux solutions pour créer la table, la première intéractivement et la seconde en une ligne de commande en mettant les instructions dans un fichier createtablehive.sql 
+\lstinputlisting[language=sh,mathescape]{Scripts/hivelaunch.sh}
+
+Ensuite il faut remplir la table bxdataset en utilisant le fichier BX-BooksCorrected\_CHRISTOPHE.txt se situant dans /shared/tp2/. Tout d'abord copiez ce fichier dans votre home hdfs et ensuite lancez
+la commande ci-dessous.
+\lstinputlisting[language=sh,mathescape]{Scripts/hiveloaddata.sh}
+
+
+Afin d'obtenir le même résultat que pour le MapReduce, veuillez complèter la requête dans hive.
+
+\lstinputlisting[language=sh,mathescape]{Scripts/hivesql.sh}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 4%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lstinputlisting[language=sh,mathescape]{Scripts/hivesqlsol.sh}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+Voilà votre requête dans hive donne exactement la même solution que votre MapReduce en java. 25 lignes se sont transformées en 3 lignes :)
+
+
+\question{PIG}\label{new-question}
+
+
+Maintenant nous allons effectuer la même chose mais en utilisant pig.
+
+Nous allons lancer pig sur daplab, loader les données dans une variable BookXRecords, ensuite les grouper par année de publication et finalement concaténer le nombre de publications par année.
+\lstinputlisting[language=sh,mathescape]{Scripts/pignotcorrected.sh}
+
+
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 5%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lstinputlisting[language=sh,mathescape]{Scripts/pig.sh}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+Allez controler le résultat dans votre output hdfs et passez-le en local.
+
+
+
+
+
+
+\question{Spark}\label{new-question}
+
+Maintenant nous allons effectuer une requête sur la base de donné de hive avec spark. 
+
+
+\lstinputlisting[language=java]{Scripts/spark.sh}
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+\\Solution :
+%%%%%%%%%%%%%%%%%%%%%%%%% SOLUTION 5%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lstinputlisting[language=java]{Scripts/sparksol.sh}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+
+
+Maintenant il s'agit de lancer ce code sur le cluster DAPLAB. : Downloader le projet github sur votre compte local de Daplab.
+
+
+\lstinputlisting[language=sh,mathescape]{Scripts/git.sh}
+
+Et finalement lancez le programme au moyen de spark-submit en passant par yarn.
+
+\lstinputlisting[language=sh,mathescape]{Scripts/yarn.sh}
+
+
+%sbt-package
+%spark-submit --class "hivespark" --master yarn-client --num-executors 4 --executor-cores 4 --executor-memory 8g hivespark_2.11-1.0.jar
+
+
+% \question{Prérequis}\label{new-question}
+% This is not necessary, but it does give you a way of linking to a different question. In order to link to another question you simply need to add the following:
+% 
+% 
+% 
+% 
+% 
+% \begin{verbatim}
+% \hyperref[question-label]{click here}
+% \end{verbatim}
+% 
+% The first part \texttt{[question-label]} is the label name and the second part \texttt{\{click here\}} is the text that is displayed as link.
+% 
+% %------------------------------------------------
+% 
+% \question{How do I change the title and subtitle?}\label{change-title}
+% 
+% To change the main title, simply find the "TITLE AND LIST OF QUESTIONS" block and replace "A Template for FAQ's" within it. To change the subtitle find the following command:
+% 
+% \begin{verbatim}
+% \newlistof{questions}{faq}{\large List of Frequently Asked Questions}
+% \end{verbatim}
+% 
+% and replace the subtitle with one of your choosing.
+% 
+% %------------------------------------------------
+% 
+% \question{Is it possible to change the spacing between the questions in the list of questions?}\label{change-spacing}
+% 
+% Yes, simply find the following line:
+% 
+% \begin{verbatim}
+% \setlength\cftparskip{.3em}
+% \end{verbatim}
+% 
+% and change the \texttt{.3em} to whatever suits your fancy.
+% 
+% %------------------------------------------------
+% 
+% \question{What if I want to hide the page numbers and/or trailing dots next to the question in the list of questions?}\label{page-numbering}
+% 
+% To remove the trailing dots to the page numbers, find the line:
+% 
+% \begin{verbatim}
+% %\renewcommand{\cftdot}{}
+% \end{verbatim}
+% and uncomment it. To remove the page numbers as well, find the following lines and uncomment them:
+% \begin{verbatim}
+% %\let\Contentsline\contentsline
+% %\renewcommand\contentsline[3]{\Contentsline{#1}{#2}{}}
+% \end{verbatim}
+% 
+% %------------------------------------------------
+% 
+% \question{Is it possible to number questions?}\label{number-questions}
+% 
+% Yes, you can refer to the number of the current question with:
+% 
+% \begin{verbatim}
+% \thequestions
+% \end{verbatim}
+%  
+% For example, this is question \thequestions. You can even incorporate question numbers into the questions and list of questions automatically by adding:
+% 
+% \begin{verbatim}
+% Question \thequestions:
+% \end{verbatim}
+% 
+% just before each \texttt{\#1} in the \texttt{\textbackslash questions} definition block in the preamble.
+% 
+% %------------------------------------------------
+% 
+% \question{Question \thequestions: Can I change the color of the question boxes?}\label{question-color}
+% 
+% Just find the following line and change the color specified there:
+% 
+% \begin{verbatim}
+% \todo[inline, color=green!40]{\textbf{#1}}
+% \end{verbatim}
+% 
+% %----------------------------------------------------------------------------------------
+
+\end{document}
